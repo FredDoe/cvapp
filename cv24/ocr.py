@@ -51,11 +51,6 @@ class OCR(CV24ImageManipulator):
                     (0, 255, 0),
                     1,
                 )
-
-            # Save the highlighted image
-            # cv2.imwrite(output_path, img)
-            # return f"Text highlighted and saved to {output_path}"
-            image = Image.fromarray(img)
-            return self.enc_im_to_b64(image)
+            return self.enc_im_to_b64(img)
         except Exception as e:
             return f"An error occurred: {e}"

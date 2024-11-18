@@ -65,5 +65,14 @@ class CV24ImageManipulator:
             encoded_string = base64.b64encode(buffer.read()).decode("utf-8")
             return self.PREFIX + encoded_string
 
+        elif isinstance(image_source, np.ndarray):  # OpenCV image (numpy array)
+            print("Using this")
+            buffer = BytesIO()
+            pil_image = Image.fromarray(image_source[:, :, ::-1])  # BGR to RGB for PIL
+            pil_image.save(buffer, format="PNG")
+            buffer.seek(0)
+            encoded_string = base64.b64encode(buffer.read()).decode("utf-8")
+            return self.PREFIX + encoded_string
+
         else:
             raise ValueError("Unsupported image source type")
