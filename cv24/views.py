@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest
-from canny.edges import EdgeDetector
-from canny.ocr import OCR
+from cv24.edges import EdgeDetector
+from cv24.ocr import OCR
 
 
 def detect_edges(request: HttpRequest):
@@ -11,10 +11,10 @@ def detect_edges(request: HttpRequest):
         output = detector.apply_canny(image)
         original = detector.enc_im_to_b64(image)
         context = {"original": original, "output": output}
-        return render(request, "canny/edge.html", context)
+        return render(request, "cv24/edge.html", context)
 
     context = {}
-    return render(request, "canny/edge.html", context)
+    return render(request, "cv24/edge.html", context)
 
 
 def perform_ocr(request: HttpRequest):
@@ -24,7 +24,7 @@ def perform_ocr(request: HttpRequest):
         output = ocr.apply_canny(image)
         original = ocr.enc_im_to_b64(image)
         context = {"original": original, "output": output}
-        return render(request, "canny/ocr.html", context)
+        return render(request, "cv24/ocr.html", context)
 
     context = {}
-    return render(request, "canny/ocr.html", context)
+    return render(request, "cv24/ocr.html", context)

@@ -1,10 +1,10 @@
-{% extends 'canny/base.html' %}
+{% extends 'cv24/base.html' %}
 
 {% block title %}Edge Detectiton using Canny Edge Dectector{% endblock title %}
 
 {% block content %}
 <div class="upl-form-wrp">
-    <form action="{% url 'canny:detect-edges' %}" method="POST" class="upl-frm"
+    <form action="{% url 'cv24:detect-edges' %}" method="POST" class="upl-frm"
         enctype="multipart/form-data">
         {% csrf_token %}
         <label for="image" class="f-lab">Image</label>

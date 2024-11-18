@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "canny",
+    "cv24",
 ]
 
 MIDDLEWARE = [
@@ -125,7 +125,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "canny", "static"),
+    os.path.join(BASE_DIR, "cv24", "static"),
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

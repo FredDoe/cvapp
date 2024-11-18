@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", include("canny.urls")),
+    path("", include("cv24.urls")),
     path("management/", admin.site.urls),
 ]
 

@@ -1,7 +1,7 @@
 import cv2
 from PIL import Image
 import pytesseract
-from canny.utils import ImageProcessor
+from cv24.utils import ImageProcessor
 
 
 class OCR(ImageProcessor):

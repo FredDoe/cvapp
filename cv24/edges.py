@@ -1,7 +1,7 @@
 import cv2
 from PIL import Image
 from PIL import Image
-from canny.utils import ImageProcessor
+from cv24.utils import ImageProcessor
 
 
 class EdgeDetector(ImageProcessor):
