@@ -30,7 +30,7 @@ def apply_canny(img_path: str):
     plt.show()
 
 
-class ImageProcessor:
+class CV24ImageManipulator:
     PREFIX = "data:image/png;base64,"
 
     def open_image(self, img_source):

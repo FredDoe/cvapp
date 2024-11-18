@@ -21,6 +21,19 @@ def perform_ocr(request: HttpRequest):
     if request.method == "POST":
         image = request.FILES.get("image")
         ocr = OCR()
+        output = ocr.apply_ocr(image)
+        original = ocr.enc_im_to_b64(image)
+        context = {"original": original, "output": output}
+        return render(request, "cv24/ocr.html", context)
+
+    context = {}
+    return render(request, "cv24/ocr.html", context)
+
+
+def deblur_image(request: HttpRequest):
+    if request.method == "POST":
+        image = request.FILES.get("image")
+        ocr = OCR()
         output = ocr.apply_canny(image)
         original = ocr.enc_im_to_b64(image)
         context = {"original": original, "output": output}

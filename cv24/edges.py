@@ -1,10 +1,10 @@
 import cv2
 from PIL import Image
 from PIL import Image
-from cv24.utils import ImageProcessor
+from cv24.utils import CV24ImageManipulator
 
 
-class EdgeDetector(ImageProcessor):
+class EdgeDetector(CV24ImageManipulator):
     def apply_canny(self, img_source):
         """Apply Canny edge detection and return the image as a base64 encoded string."""
         img = self.open_image(img_source)
