@@ -14,7 +14,7 @@ def detect_edges(request: HttpRequest):
         elif image.__class__.__name__ == "TemporaryUploadedFile":
             pass
         context = {"original": original, "output": output}
-        return render(request, "canny/detect_edge.html", context)
+        return render(request, "canny/edge.html", context)
 
     context = {}
-    return render(request, "canny/detect_edge.html", context)
+    return render(request, "canny/edge.html", context)
