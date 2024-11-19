@@ -1,0 +1,28 @@
+{% extends 'cv24/base.html' %}
+
+{% block title %}CV24 - Image Deblurring{% endblock title %}
+
+{% block content %}
+<div class="upl-form-wrp">
+    <form action="{% url 'cv24:ocr' %}" method="POST" class="upl-frm"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image" class="f-lab">Image</label>
+        <input type="file" name="image" accept=".png, .jpg" required
+            class="inp">
+        <button type="submit" class="btn">Deblur Image</button>
+    </form>
+</div>
+<div class="org-res-wrp">
+    <div class="org-res left ">
+        <h3>Input Image</h3>
+        <img
+            src="{{ original }}" alt>
+    </div>
+    <div class="org-res">
+        <h3>Output Image</h3>
+        <img
+            src="{{ output }}" alt>
+    </div>
+</div>
+{% endblock content %}
