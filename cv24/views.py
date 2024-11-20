@@ -9,7 +9,7 @@ def detect_edges(request: HttpRequest):
     if request.method == "POST":
         image = request.FILES.get("image")
         detector = EdgeDetector()
-        output = detector.apply_canny(image)
+        output = detector.apply_sobel(image)
         original = detector.enc_im_to_b64(image)
         context = {"original": original, "output": output}
         return render(request, "cv24/edge.html", context)
@@ -35,7 +35,7 @@ def deblur_image(request: HttpRequest):
     if request.method == "POST":
         image = request.FILES.get("image")
         deblur = Deblur24()
-        output = deblur.wiener_deblur(image)
+        output = deblur.rich_lucy_blind_deblur(image)
         original = deblur.enc_im_to_b64(image)
         context = {"original": original, "output": output}
         return render(request, "cv24/deblur.html", context)

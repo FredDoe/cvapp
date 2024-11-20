@@ -33,18 +33,18 @@ def apply_canny(img_path: str):
 class CV24ImageManipulator:
     PREFIX = "data:image/png;base64,"
 
-    def open_image(self, img_source, gray: bool = False):
+    def open_image(self, imsrc, gray: bool = False):
         """Open the image from path, InMemoryUploadedFile, or TemporaryUploadedFile."""
-        if isinstance(img_source, (InMemoryUploadedFile, TemporaryUploadedFile)):
-            img_source.seek(0)
-            image_array = np.frombuffer(img_source.read(), np.uint8)
+        if isinstance(imsrc, (InMemoryUploadedFile, TemporaryUploadedFile)):
+            imsrc.seek(0)
+            image_array = np.frombuffer(imsrc.read(), np.uint8)
             if gray:
                 return cv2.imdecode(image_array, cv2.IMREAD_GRAYSCALE)
             return cv2.imdecode(image_array, cv2.IMREAD_COLOR)
-        elif isinstance(img_source, str):  # File path
+        elif isinstance(imsrc, str):  # File path
             if gray:
-                return cv2.imread(img_source, cv2.IMREAD_GRAYSCALE)
-            return cv2.imread(img_source)
+                return cv2.imread(imsrc, cv2.IMREAD_GRAYSCALE)
+            return cv2.imread(imsrc)
         else:
             raise ValueError("Unsupported file type")
 
@@ -77,7 +77,6 @@ class CV24ImageManipulator:
                 pil_image = Image.fromarray(imsrc[:, :, ::-1])  # BGR to RGB for PIL
             else:
                 raise ValueError("Unsupported image shape")
-            pil_image = Image.fromarray(imsrc[:, :, ::-1])  # BGR to RGB for PIL
             pil_image.save(buffer, format="PNG")
             buffer.seek(0)
             encoded_string = base64.b64encode(buffer.read()).decode("utf-8")

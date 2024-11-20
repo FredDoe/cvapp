@@ -36,7 +36,6 @@ class Deblur24(CV24ImageManipulator):
         # Normalize and convert to 8-bit image
         deblurred = np.clip(deblurred * 255, 0, 255).astype("uint8")
 
-        print("Got Here")
         return self.enc_im_to_b64(deblurred)
 
     def rich_lucy_blind_deblur(self, imsrc, iterations=30):
@@ -47,7 +46,7 @@ class Deblur24(CV24ImageManipulator):
         psf = np.ones((5, 5)) / 25  # Initial guess
 
         # Apply Richardson-Lucy deconvolution
-        deblurred = restoration.richardson_lucy(image, psf, iterations=iterations)
+        deblurred = restoration.richardson_lucy(image, psf, num_iter=iterations)
 
         return self.enc_im_to_b64(deblurred)
 
