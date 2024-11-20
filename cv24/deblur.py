@@ -1,57 +1,44 @@
-import cv2
+import os
 import numpy as np
+import torch
+from PIL import Image
 from skimage.restoration import wiener
 from skimage import io, restoration
+from torchvision.transforms.functional import to_tensor, to_pil_image
 from cv24.utils import CV24ImageManipulator
+from .mprnet import MPRNet
 
 
 class Deblur24(CV24ImageManipulator):
-    def wiener_kernel(self, length, angle):
-        kernel = np.zeros((length, length))
-        center = length // 2
-        angle = angle % 180
-        radian = np.deg2rad(angle)
 
-        for i in range(length):
-            x = int(center + (i - center) * np.cos(radian))
-            y = int(center + (i - center) * np.sin(radian))
-            kernel[x, y] = 1
+    def load_model(self):
+        """
+        Load the pretrained MPRNet model once when the app starts
+        and store it globally.
+        """
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        return kernel / kernel.sum()
+        deblur_model = MPRNet().to(device)
 
-    def wiener_deblur(self, imsrc, kernel_len=15, kernel_angle=45, noise_power=0.01):
-        # Load the blurred image
-        image = self.open_image(imsrc, gray=True)
-        # image = cv2.imread(imsrc, cv2.IMREAD_GRAYSCALE)
+        chkpoint = os.path.join(
+            os.path.dirname(__file__), "weights", "mprnet_deblurring.pth"
+        )
+        deblur_model.load_state_dict(torch.load(chkpoint, map_location=device))
 
-        if image is None:
-            raise ValueError("Image not found at the specified path.")
+        deblur_model.eval()
 
-        # Generate the motion blur kernel
-        psf = self.wiener_kernel(kernel_len, kernel_angle)
+    def mprnet_deblur(self, imsrc):
+        img = Image.open(imsrc).convert("RGB")
+        img_tensor = to_tensor(img).unsqueeze(0)  # Add batch dimension
 
-        # Perform Wiener deconvolution
-        deblurred = wiener(image, psf, balance=noise_power)
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        img_tensor = img_tensor.to(device)
 
-        # Normalize and convert to 8-bit image
-        deblurred = np.clip(deblurred * 255, 0, 255).astype("uint8")
+        deblur_model = self.load_model()
+        with torch.no_grad():
+            restored = deblur_model(img_tensor)[0]
 
-        return self.enc_im_to_b64(deblurred)
+        restored = restored.clamp(0, 1).squeeze(0).cpu()  # Remove batch dimension
+        restored_img = to_pil_image(restored)
 
-    def rich_lucy_blind_deblur(self, imsrc, iterations=30):
-        # Load the blurred image
-        image = io.imread(imsrc, as_gray=True)
-
-        # Estimate the Point Spread Function (PSF)
-        psf = np.ones((5, 5)) / 25  # Initial guess
-
-        # Apply Richardson-Lucy deconvolution
-        deblurred = restoration.richardson_lucy(image, psf, num_iter=iterations)
-
-        return self.enc_im_to_b64(deblurred)
-
-    def deepblur(self):
-        pass
-
-    def deblurgan(self):
-        pass
+        return self.enc_im_to_b64(restored_img)
