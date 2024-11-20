@@ -6,7 +6,7 @@ CV24 - Image Deblurring
 
 {% block content %}
 <div class="upl-form-wrp">
-    <form action="{% url 'cv24:ocr' %}" method="POST" class="upl-frm"
+    <form action="{% url 'cv24:deblur' %}" method="POST" class="upl-frm"
         enctype="multipart/form-data">
         {% csrf_token %}
         <label for="image" class="f-lab">Image</label>
