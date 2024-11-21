@@ -15,6 +15,7 @@ CV24 - Edge Detectiton using Canny Edge Dectector
         <button type="submit" class="btn">Detect Edges</button>
     </form>
 </div>
+{% if original %}
 <div class="org-res-wrp">
     <div class="org-res left ">
         <h3>Input Image</h3>
@@ -27,4 +28,5 @@ CV24 - Edge Detectiton using Canny Edge Dectector
             src="{{ output }}" alt>
     </div>
 </div>
+{% endif %}
 {% endblock content %}

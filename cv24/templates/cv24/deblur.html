@@ -15,16 +15,16 @@ CV24 - Image Deblurring
         <button type="submit" class="btn">Deblur Image</button>
     </form>
 </div>
+{% if original %}
 <div class="org-res-wrp">
     <div class="org-res left ">
         <h3>Input Image</h3>
-        <img
-            src="{{ original }}" alt>
+        <img src="{{ original }}" alt>
     </div>
     <div class="org-res">
         <h3>Deblurred Image</h3>
-        <img
-            src="{{ output }}" alt>
+        <img src="{{ output }}" alt>
     </div>
 </div>
+{% endif %}
 {% endblock content %}

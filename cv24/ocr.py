@@ -1,5 +1,4 @@
 import cv2
-from PIL import Image
 import pytesseract
 from cv24.utils import CV24ImageManipulator
 
@@ -35,6 +34,8 @@ class OCR(CV24ImageManipulator):
             h, w, _ = img.shape
             data = pytesseract.image_to_boxes(img, lang=lang)
 
+            recognized_text = pytesseract.image_to_string(img, lang=lang).strip()
+
             # Draw bounding boxes
             for box in data.splitlines():
                 b = box.split()
@@ -51,6 +52,6 @@ class OCR(CV24ImageManipulator):
                     (0, 255, 0),
                     1,
                 )
-            return self.enc_im_to_b64(img)
+            return self.enc_im_to_b64(img), recognized_text
         except Exception as e:
             return f"An error occurred: {e}"

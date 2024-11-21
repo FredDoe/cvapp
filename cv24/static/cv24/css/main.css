@@ -108,3 +108,20 @@
     height: 400px;
     border-radius: 10px;
 }
+
+.ocr-txt-wrp {
+    justify-content: center;
+    justify-self: center;
+    text-align: justify;
+}
+
+.ocr-txt-wrp>p {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.no-txt {
+    border: 1px solid red;
+    color: red;
+}

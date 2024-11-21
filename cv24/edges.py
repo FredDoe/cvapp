@@ -5,10 +5,12 @@ from cv24.utils import CV24ImageManipulator
 
 
 class EdgeDetector(CV24ImageManipulator):
-    def apply_canny(self, imsrc):
+    def apply_canny(
+        self, imsrc, minval: int = 100, maxval: int = 200, aperture: int = 3
+    ):
         """Apply Canny edge detection and return the image as a base64 encoded string."""
         img = self.open_image(imsrc)
-        edges = cv2.Canny(img, 100, 200, 3, L2gradient=True)
+        edges = cv2.Canny(img, minval, maxval, aperture, L2gradient=True)
         edge_image = Image.fromarray(edges)
         return self.enc_im_to_b64(edge_image)
 

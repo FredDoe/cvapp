@@ -9,27 +9,6 @@ from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUpload
 from PIL import Image
 
 
-def open_image(img_path: str):
-    """Open the image"""
-    return cv2.imread(img_path)
-
-
-def apply_canny(img_path: str):
-    """Apply Canny"""
-    BASE_DIR = os.path.dirname(img_path)
-    name, ext = os.path.splitext(os.path.basename(img_path))
-
-    img = open_image(img_path)
-    edges = cv2.Canny(img, 100, 200, 3, L2gradient=True)
-    plt.figure()
-    plt.title(f"{name} - Canny")
-    plt.imsave(
-        os.path.join(BASE_DIR, f"{name}-canny{ext}"), edges, cmap="gray", format="png"
-    )
-    plt.imshow(edges, cmap="gray")
-    plt.show()
-
-
 class CV24ImageManipulator:
     PREFIX = "data:image/png;base64,"
 

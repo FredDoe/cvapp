@@ -15,6 +15,8 @@ CV24 - Optical Character Recognition
         <button type="submit" class="btn">Perform OCR</button>
     </form>
 </div>
+
+{% if original %}
 <div class="org-res-wrp">
     <div class="org-res left ">
         <h3>Input Image</h3>
@@ -27,4 +29,13 @@ CV24 - Optical Character Recognition
             src="{{ output }}" alt>
     </div>
 </div>
+<div class="ocr-txt-wrp">
+    <h3><u>Recognized Texts</u></h3>
+    {% if text %}
+    <p>{{text|linebreaksbr|safe}}</p>
+    {% else %}
+    <p class="no-txt">No text recognized in uploaded image !</p>
+    {% endif %}
+</div>
+{% endif %}
 {% endblock content %}
