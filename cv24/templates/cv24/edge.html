@@ -13,6 +13,18 @@ CV24 - Edge Detectiton using Canny Edge Dectector
         <input type="file" name="image" accept=".png, .jpg" required
             class="inp">
         <button type="submit" class="btn">Detect Edges</button>
+        <div class="f-extra">
+            <label for="min_val" class="f-lab">
+                <small>Lower Threshold</small>
+            </label>
+            <input type="number" value="100" min="50" max="500"
+                name="min_val">
+            <label for="max_val" class="ml-4r">
+                <small>Upper Threshold</small>
+            </label>
+            <input type="number" value="200" min="50" max="500"
+                name="max_val">
+        </div>
     </form>
 </div>
 {% if original %}

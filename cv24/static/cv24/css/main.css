@@ -125,3 +125,16 @@
     border: 1px solid red;
     color: red;
 }
+
+.f-extra {
+    margin-top: 1.5rem;
+    justify-self: center;
+}
+
+.f-extra label {
+    font-size: 16px;
+}
+
+.ml-4r {
+    margin-left: 4rem;
+}

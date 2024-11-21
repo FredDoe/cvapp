@@ -3,18 +3,17 @@ from django.http import HttpRequest
 from cv24.edges import EdgeDetector
 from cv24.ocr import OCR
 from cv24.deblur import Deblur24
-import os
+from time import sleep
 from os.path import dirname, abspath, join as pjoin
-from PIL import Image
-from io import BytesIO
-from torchvision.transforms.functional import to_tensor, to_pil_image
 
 
 def detect_edges(request: HttpRequest):
     if request.method == "POST":
         image = request.FILES.get("image")
+        min_val = int(request.POST.get("min_val"))
+        max_val = int(request.POST.get("max_val"))
         detector = EdgeDetector()
-        output = detector.apply_canny(image)
+        output = detector.apply_canny(image, minval=min_val, maxval=max_val)
         original = detector.enc_im_to_b64(image)
         context = {"original": original, "output": output}
         return render(request, "cv24/edge.html", context)
@@ -46,6 +45,7 @@ def deblur_image(request: HttpRequest):
         deblur = Deblur24()
         original = deblur.enc_im_to_b64(image)
         output = deblur.enc_im_to_b64(simage)
+        sleep(2)
         context = {"original": original, "output": output}
         return render(request, "cv24/deblur.html", context)
 
