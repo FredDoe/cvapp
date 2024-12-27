@@ -45,7 +45,6 @@ def deblur_image(request: HttpRequest):
         deblur = Deblur24()
         original = deblur.enc_im_to_b64(image)
         output = deblur.enc_im_to_b64(simage)
-        sleep(2)
         context = {"original": original, "output": output}
         return render(request, "cv24/deblur.html", context)
 
